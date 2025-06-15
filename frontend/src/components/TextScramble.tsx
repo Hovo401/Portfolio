@@ -33,18 +33,22 @@ const TextScramble: React.FC<{ texts: TextItem[] }> = ({ texts }) => {
     const currentText = texts[currentIndex];
     const nextText = currentText?.text;
     const chars =
-      "abcdefghijklmnopqrstuvwxyz!@#$%^&*()[]{}<λ∑∫π∞✓漢字開発者▓█╢▒░▼◘□Ω";
+      "abcdefghijklmnopqrstuvwxyz!@#$%^&*()[]{}<λ∑∫π∞✓漢字開発者▓█╢▒░▓█╢▒░▓█╢▒░▓█╢▒░▓▼◘□Ω";
 
     // setDisplayedText(Array(nextText.length).fill(""));
-    for (let i = 0; i < Math.max(nextText.length, displayedText.length); i++) {
+    for (
+      let i = 0;
+      i < Math.max(nextText.length, displayedText.join("").trimEnd().length);
+      i++
+    ) {
       // for (let i = 0; i < nextText.length; i++) {
-      const tl = gsap.timeline({ delay: i * 0.07 });
+      const tl = gsap.timeline({ delay: i * 0.05 });
 
       for (let j = 0; j < 4; j++) {
         tl.to(
           {},
           {
-            duration: 0.15,
+            duration: 0.1,
             onStart: () => {
               setDisplayedText((prev) => {
                 const newText = [...prev];

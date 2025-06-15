@@ -15,7 +15,9 @@ function About() {
             delay: 8,
             ststop: 2,
           },
-          { text: "aracaca and Diotek", delay: 4 },
+          { text: "aracaca and Diotek rgreg regre re", delay: 4 },
+          { text: "Diotek", delay: 4 },
+          { text: "aracaca ", delay: 4 },
         ]}
       />
     </>
