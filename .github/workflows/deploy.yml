@@ -1,0 +1,70 @@
+name: test and deploy
+on:
+  push:
+    branches:
+      - main
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: get repository code
+        uses: actions/checkout@v3
+      - name: cahe
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: node-modules-serv-${{ hashFiles('**/package-lock.json') }}
+      - name: npm ci
+        run: cd ./serv && npm ci
+      - name: lint
+        run: cd ./serv && npm run lint
+  build:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: get repository code
+        uses: actions/checkout@v3
+      - name: cahe
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: node-modules-serv-${{ hashFiles('**/package-lock.json') }}
+      - name: npm ci
+        run: cd ./serv && npm ci
+      - name: ls
+        run: cd ./serv && ls
+      - name: build
+        run: cd ./serv && npm run build
+      - name: build
+        run: cd ./serv && ls
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: get repository code
+        uses: actions/checkout@v3
+      - name: cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: node-modules-serv-${{ hashFiles('**/package-lock.json') }}
+      - name: npm ci
+        run: cd ./serv && npm ci
+      - name: build react app
+        run: cd ./serv && npm run build
+      - name: deploy to server
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.DIOTEK_XYZ_SERV_PRIVATE_KEY }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USERNAME }}
+          SERVER_DESTINATION: /var/www/build/
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H $SERVER_HOST >> ~/.ssh/known_hosts
+          rsync -avz --delete ./serv/build/ $SERVER_USER@$SERVER_HOST:$SERVER_DESTINATION
+          ssh $SERVER_USER@$SERVER_HOST << 'EOF'
+            cd $SERVER_DESTINATION
+            echo "Deployment complete"
+          EOF
