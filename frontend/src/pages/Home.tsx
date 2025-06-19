@@ -17,7 +17,7 @@ function Home() {
           { text: "Hovo401", delay: 3 },
         ]}
       />
-      test text
+      test actions deploy
     </>
   );
 }
