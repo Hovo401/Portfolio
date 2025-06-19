@@ -54,7 +54,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.DIOTEK_XYZ_SERV_PRIVATE_KEY }}
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
           SERVER_USER: ${{ secrets.SERVER_USERNAME }}
-          SERVER_DESTINATION: /var/www/static
+          SERVER_DESTINATION: /var/www/Portfolio/static
         run: |
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
