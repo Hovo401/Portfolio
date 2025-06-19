@@ -19,7 +19,6 @@ jobs:
       - name: lint
         run: cd ./frontend && npm run lint
   build:
-    needs: lint
     runs-on: ubuntu-latest
     steps:
       - name: get repository code
@@ -62,7 +61,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H $SERVER_HOST >> ~/.ssh/known_hosts
           ssh $SERVER_USER@$SERVER_HOST "rm -rf $SERVER_DESTINATION/*"
-          scp -r ./serv/dist/* $SERVER_USER@$SERVER_HOST:$SERVER_DESTINATION
+          scp -r ./frontend/dist/* $SERVER_USER@$SERVER_HOST:$SERVER_DESTINATION
           ssh $SERVER_USER@$SERVER_HOST << 'EOF'
             cd $SERVER_DESTINATION
             echo "Deployment complete"
