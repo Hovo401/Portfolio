@@ -28,6 +28,7 @@ const TextScramble: React.FC<{ texts: TextItem[] }> = ({ texts }) => {
         }, (texts[0].ststop ?? 0) * 1000);
       });
       newStart = false;
+      texts[0].ststop = 0;
     }
 
     const currentText = texts[currentIndex];
@@ -42,9 +43,9 @@ const TextScramble: React.FC<{ texts: TextItem[] }> = ({ texts }) => {
       i++
     ) {
       // for (let i = 0; i < nextText.length; i++) {
-      const tl = gsap.timeline({ delay: i * 0.05 });
+      const tl = gsap.timeline({ delay: i * 0.07 });
 
-      for (let j = 0; j < 4; j++) {
+      for (let j = 0; j < 3; j++) {
         tl.to(
           {},
           {
@@ -63,7 +64,7 @@ const TextScramble: React.FC<{ texts: TextItem[] }> = ({ texts }) => {
       tl.to(
         {},
         {
-          duration: 0.2,
+          duration: 0.25,
           onComplete: () => {
             setDisplayedText((prev) => {
               const newText = [...prev];
@@ -87,7 +88,7 @@ const TextScramble: React.FC<{ texts: TextItem[] }> = ({ texts }) => {
   }
 
   return (
-    <div className={`font-mono text-2xl text-gray-800 white-600 `}>
+    <div className={`font-mono text-2xl   `}>
       <div>
         {displayedText.map((char, index) => (
           <span className={s.container} key={`${index}- || 0}`}>

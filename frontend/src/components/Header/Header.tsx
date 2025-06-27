@@ -5,7 +5,9 @@ function Header() {
   const location = useLocation();
 
   return (
-    <nav className={`bg-gray-800 p-4   ${s.flex}`}>
+    <nav
+      className={` fixed w-1/1 h-[40px] items-center px-4  ${s.flex}`}
+    >
       <ul className={`flex space-x-4 text-white `}>
         <li className={`${location.pathname == "/" ? s.container : ""}`}>
           <Link to="/" className="hover:text-blue-300">
